@@ -1,0 +1,62 @@
+v0.0.1
+	Making sure serial monitor thread starts and stops
+v0.0.2
+	ADD serial port connection functionality
+	ADD responses: dictionary of {command, MSPResponse} to keep track of data for a given command's response as well as a flag (finished) to notify when the data has arrived
+	ADD responsesTimeout: seconds to wait for a response before giving up
+	ADD _sendCommand: sends a command and optional data (adds new item to responses dictionary)
+	ADD _waitForResponse: waits for a response for a given command (keeps checking responses dictionary for finished=true)
+	ADD _sendAndWait: calls _sendCommand and then _waitForResponse
+	ADD _processCommand: adds (or updates) the data for the specified command and sets finished=true
+v0.0.3
+	ADD __del__: stop the thread and close the serial port when object is deleted
+	ADD _toInt16: convert two bytes (bytearray) to a signed word
+	ADD _toUInt16: convert two bytes (bytearray) to an unsigned word
+	add _toInt32: convert four bytes (bytearray) to a dword
+	ADD _toUInt32: convert four bytes (bytearray) to an unsigned dword
+	ADD _fromInt16: convert a signed word to two bytes
+	ADD _fromUInt16: convert an unsigned word to two bytes
+	ADD _fromInt32: convert a signed dword to two bytes
+	ADD _fromUInt32: convert an unsigned dword to two bytes
+	ADD getAttitude: returns three-axis attitude information
+	ADD getIMU: returns raw motion data (accelerometer, gyroscope, magnetrometer); some of these may be zero if there isn't such a sensor installed
+	ADD getRC: returns RC data (pitch, roll, yaw, throttle, and aux channels)
+	ADD getAnalog: returns analog sensor data (battery, rssi)
+	ADD getAltitude: returns estimated altitude and vertical speed (only available with an appropriate sensor)
+	ADD setRC: set new RC values
+	ADD setThrottle: set only throttle to new value
+	ADD setAux: set specified Aux channel to new value
+v0.0.4
+	ADD setHeading: set the follow-heading (not sure what it does...)
+	ADD getGPS: get GPS coordinates and other data
+	ADD getStatus: get general flight controller status information
+v0.0.5
+	FIX doesn't try to join with the serial monitor thread if it is not running (that is, if the port open failed)
+v0.0.6
+	ADD getMotors: returns current motor signal value (not necessarily actual motor speed)
+	ADD getBoxnames: returns the BOX names from the flight controller (separated by ';')
+	ADD getModeRanges: returns enable range and aux channel for each flight mode
+	ADD setAccCalibration: calibrates accelerometer (make sure the copter is on a flat, level surface!)
+	ADD setMagCalibration: calibrates the magnetrometer
+	ADD getMisc: returns miscellaneous data
+	ADD setMisc: sets miscellaneous data
+v0.0.7
+	ADD DocStrings to public methods
+v0.0.8
+	FIX spelling of "MSPCOMMANDS" (was MSPCOMMMANDS)
+	FIX enum classes are now all private (didn't need to be exposed outside of the class)
+	DEL	MSPModeRanges enum class; wasn't needed
+v0.0.9
+	FIX get* commands now use an intermediate _sendAndGet method to prevent excessive copy-and-paste programming
+v0.0.10
+	ADD getDistanceToHome: returns distance and heading to saved home location
+	ADD getServos: returns current servo signal value (not necessarily the actual servo position)
+v0.0.11
+	FIX made some changes to comply with PEP0008
+v0.0.12
+	FIX made MODERANGENAMES non-public (didn't need to be exposed outside of the class)
+v0.0.13
+	ADD commandReceived method for subclasses
+v0.0.14
+	FIX attitude now reports in degrees for all three axes, heading is +/- 180
+	FIX getServos bytearray slice
